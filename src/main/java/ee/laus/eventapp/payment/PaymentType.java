@@ -14,5 +14,6 @@ public class PaymentType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(unique = true, nullable = false)
-    String name;
+    String type;
+    String title;
 }

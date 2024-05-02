@@ -1,6 +1,7 @@
 package ee.laus.eventapp.event.response;
 
 import ee.laus.eventapp.participant.response.EventParticipantResponse;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +13,7 @@ public record EventResponse(
         LocalDateTime time,
         String location,
         String description,
+        @Setter
         List<EventParticipantResponse> participants
 ) {
 }

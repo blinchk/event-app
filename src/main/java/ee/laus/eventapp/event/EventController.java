@@ -1,5 +1,6 @@
 package ee.laus.eventapp.event;
 
+import ee.laus.eventapp.event.dto.EventDto;
 import ee.laus.eventapp.event.response.EventListItem;
 import ee.laus.eventapp.event.response.EventResponse;
 import ee.laus.eventapp.event.search.EventSearchParams;
@@ -28,6 +29,16 @@ public class EventController {
     @GetMapping("/{uuid}")
     public EventResponse getEvent(@PathVariable UUID uuid) {
         return eventService.getEvent(uuid);
+    }
+
+    @DeleteMapping("/{uuid}")
+    public void removeEvent(@PathVariable UUID uuid) {
+        eventService.removeEvent(uuid);
+    }
+
+    @PostMapping
+    public EventResponse addEvent(@RequestBody EventDto event) {
+        return eventService.addEvent(event);
     }
 
     @PostMapping("/{uuid}/participant/legal-entity")

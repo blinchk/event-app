@@ -3,8 +3,10 @@ package ee.laus.eventapp.participant;
 import ee.laus.eventapp.event.EventRepository;
 import ee.laus.eventapp.exception.InvalidEntityIdException;
 import ee.laus.eventapp.participant.dto.LegalEntityParticipantDto;
+import ee.laus.eventapp.participant.dto.ParticipantDto;
 import ee.laus.eventapp.participant.dto.PrivateEntityParticipantDto;
 import ee.laus.eventapp.participant.entity.LegalEntityParticipant;
+import ee.laus.eventapp.participant.entity.PrivateEntityParticipant;
 import ee.laus.eventapp.participant.response.EventParticipantResponse;
 import ee.laus.eventapp.payment.PaymentTypeRepository;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,19 @@ public class ParticipantService {
                 request.details(),
                 request.personCount()
         );
+        return addEventParticipant(eventUuid, request, participant);
+    }
+
+    public EventParticipantResponse addEventParticipant(UUID eventUuid, PrivateEntityParticipantDto request) {
+        Participant participant = new PrivateEntityParticipant(
+                request.personalCode(),
+                request.firstName(),
+                request.lastName()
+        );
+        return addEventParticipant(eventUuid, request, participant);
+    }
+
+    private EventParticipantResponse addEventParticipant(UUID eventUuid, ParticipantDto request, Participant participant) {
         participant.setPaymentType(
                 paymentTypeRepository.findById(request.paymentTypeId())
                         .orElseThrow(() -> new InvalidEntityIdException("Invalid payment type ID"))
@@ -40,9 +55,5 @@ public class ParticipantService {
         );
         participant = participantRepository.save(participant);
         return new EventParticipantResponse(participant.getName(), participant.getCode());
-    }
-
-    public EventParticipantResponse addEventParticipant(UUID eventUuid, PrivateEntityParticipantDto request) {
-        return new EventParticipantResponse("1", "1");
     }
 }

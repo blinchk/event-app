@@ -24,7 +24,11 @@ public class EventRepositoryImpl implements EventRepositoryCustom {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<EventListItem> query = criteriaBuilder.createQuery(EventListItem.class);
         Root<Event> root = query.from(Event.class);
-        query = query.multiselect(root.get("uuid"), root.get("name"), root.get("time").as(LocalDate.class));
+        query = query.multiselect(
+                root.get("uuid"),
+                root.get("name"),
+                root.get("time").as(LocalDate.class)
+        );
         if (eventSearchParams.startDate() != null) {
             query = query.where(
                     criteriaBuilder.greaterThan(root.get("time"), eventSearchParams.startDate())

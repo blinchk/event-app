@@ -5,5 +5,5 @@ public record LegalEntityParticipantDto(
         Integer personCount,
         String details,
         Integer paymentTypeId
-) {
+) implements ParticipantDto {
 }

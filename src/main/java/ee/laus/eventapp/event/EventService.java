@@ -1,5 +1,7 @@
 package ee.laus.eventapp.event;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import ee.laus.eventapp.event.dto.EventDto;
 import ee.laus.eventapp.event.response.EventListItem;
 import ee.laus.eventapp.event.response.EventResponse;
 import ee.laus.eventapp.event.search.EventSearchParams;
@@ -17,6 +19,7 @@ import java.util.UUID;
 public class EventService {
     private final EventRepository eventRepository;
     private final ParticipantService participantService;
+    private final ObjectMapper mapper;
 
     public EventResponse getEvent(UUID uuid) {
         Event event = eventRepository.findById(uuid).orElseThrow(EntityNotFoundException::new);
@@ -33,5 +36,15 @@ public class EventService {
 
     public List<EventListItem> getEvents(EventSearchParams searchParams) {
         return eventRepository.getEvents(searchParams);
+    }
+
+    public EventResponse addEvent(EventDto request) {
+        Event event = mapper.convertValue(request, Event.class);
+        event = eventRepository.save(event);
+        return mapper.convertValue(event, EventResponse.class);
+    }
+
+    public void removeEvent(UUID uuid) {
+        eventRepository.deleteById(uuid);
     }
 }
