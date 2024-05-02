@@ -1,0 +1,11 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_DB: events_app
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres

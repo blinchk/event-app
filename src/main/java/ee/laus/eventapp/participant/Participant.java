@@ -1,8 +1,7 @@
 package ee.laus.eventapp.participant;
 
 import ee.laus.eventapp.event.Event;
-import ee.laus.eventapp.participant.entity.EntityType;
-import ee.laus.eventapp.participant.payment.PaymentType;
+import ee.laus.eventapp.payment.PaymentType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,12 +13,18 @@ import java.util.UUID;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Participant {
+@DiscriminatorColumn(name = "entityType")
+public abstract class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    private EntityType entityType;
+    private UUID uuid;
+    @ManyToOne
     private PaymentType paymentType;
     @ManyToOne
     private Event event;
+    @Column(length = 5000)
+    private String details;
+
+    public abstract String getCode();
+    public abstract String getName();
 }

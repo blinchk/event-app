@@ -1,9 +1,8 @@
 package ee.laus.eventapp.participant.entity;
 
 import ee.laus.eventapp.participant.Participant;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import ee.laus.eventapp.payment.PaymentType;
+import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -12,13 +11,15 @@ import org.hibernate.validator.constraints.Length;
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
-public class LegalEntityParticipant {
-    @Id
+@AllArgsConstructor()
+@DiscriminatorValue(value = "LEGAL_ENTITY")
+public class LegalEntityParticipant extends Participant {
     private String registryCode;
-    @OneToOne
-    private Participant participant;
+    private String name;
     private Integer personCount;
-    @Length(max = 5000)
-    private String details;
+
+    @Override
+    public String getCode() {
+        return getRegistryCode();
+    }
 }

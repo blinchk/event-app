@@ -1,8 +1,9 @@
 package ee.laus.eventapp.participant.entity;
 
 import ee.laus.eventapp.participant.Participant;
+import jakarta.persistence.Column;
+import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
@@ -13,13 +14,21 @@ import org.hibernate.validator.constraints.Length;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrivateEntityParticipant {
-    @Id
-    private String legalEntity;
+@DiscriminatorValue(value = "PRIVATE_ENTITY")
+public class PrivateEntityParticipant extends Participant {
+    @Column(length = 11)
+    @Length(min = 11, max = 11)
+    private String personalCode;
     private String firstName;
     private String lastName;
-    @OneToOne
-    private Participant participant;
-    @Length(max = 1500)
-    private String details;
+
+    @Override
+    public String getCode() {
+        return getPersonalCode();
+    }
+
+    @Override
+    public String getName() {
+        return String.format("%s %s", getFirstName(), getLastName());
+    }
 }

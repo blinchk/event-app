@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Future;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -19,8 +20,9 @@ import java.util.UUID;
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private UUID uuid;
     private String name;
+    @Future
     private LocalDateTime time;
     private String location;
     @Length(max = 1000)
