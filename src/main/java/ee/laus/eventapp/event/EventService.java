@@ -5,7 +5,7 @@ import ee.laus.eventapp.event.dto.EventDto;
 import ee.laus.eventapp.event.response.EventListItem;
 import ee.laus.eventapp.event.response.EventResponse;
 import ee.laus.eventapp.event.search.EventSearchParams;
-import ee.laus.eventapp.exception.EntityNotFoundException;
+import ee.laus.eventapp.common.exception.EntityNotFoundException;
 import ee.laus.eventapp.participant.ParticipantService;
 import ee.laus.eventapp.participant.response.EventParticipantResponse;
 import lombok.RequiredArgsConstructor;

@@ -42,12 +42,12 @@ public class EventController {
     }
 
     @PostMapping("/{uuid}/participant/legal-entity")
-    public EventParticipantResponse addParticipant(@PathVariable UUID uuid, @RequestBody LegalEntityParticipantDto eventParticipant) {
-        return participantService.addEventParticipant(uuid, eventParticipant);
+    public EventParticipantResponse addParticipant(@PathVariable(value = "uuid") UUID eventUuid, @RequestBody LegalEntityParticipantDto eventParticipant) {
+        return participantService.addEventParticipant(eventUuid, eventParticipant);
     }
 
     @PostMapping("/{uuid}/participant/private-entity")
-    public EventParticipantResponse addParticipant(@PathVariable UUID uuid, @RequestBody PrivateEntityParticipantDto eventParticipant) {
-        return participantService.addEventParticipant(uuid, eventParticipant);
+    public EventParticipantResponse addParticipant(@PathVariable(value = "uuid") UUID eventUuid, @RequestBody PrivateEntityParticipantDto eventParticipant) {
+        return participantService.addEventParticipant(eventUuid, eventParticipant);
     }
 }

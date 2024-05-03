@@ -1,7 +1,9 @@
 package ee.laus.eventapp.participant;
 
+import com.github.vladislavgoltjajev.personalcode.locale.estonia.EstonianPersonalCodeValidator;
+import ee.laus.eventapp.common.exception.IllegalPersonalCodeException;
 import ee.laus.eventapp.event.EventRepository;
-import ee.laus.eventapp.exception.InvalidEntityIdException;
+import ee.laus.eventapp.common.exception.InvalidEntityIdException;
 import ee.laus.eventapp.participant.dto.LegalEntityParticipantDto;
 import ee.laus.eventapp.participant.dto.ParticipantDto;
 import ee.laus.eventapp.participant.dto.PrivateEntityParticipantDto;
@@ -21,30 +23,39 @@ public class ParticipantService {
     private final ParticipantRepository participantRepository;
     private final PaymentTypeRepository paymentTypeRepository;
     private final EventRepository eventRepository;
+    private final EstonianPersonalCodeValidator personalCodeValidator = new EstonianPersonalCodeValidator();
 
     public List<EventParticipantResponse> getEventParticipants(UUID eventUuid) {
         return participantRepository.getEventParticipantsByEventUuid(eventUuid);
     }
 
     public EventParticipantResponse addEventParticipant(UUID eventUuid, LegalEntityParticipantDto request) {
-        Participant participant = new LegalEntityParticipant(
+        LegalEntityParticipant participant = new LegalEntityParticipant(
                 request.registryCode(),
-                request.details(),
+                request.name(),
                 request.personCount()
         );
-        return addEventParticipant(eventUuid, request, participant);
+        participant.setPaymentType(
+                paymentTypeRepository.findById(request.paymentTypeId())
+                        .orElseThrow(() -> new InvalidEntityIdException("Invalid payment type ID"))
+        );
+        participant.setEvent(
+                eventRepository.findById(eventUuid)
+                        .orElseThrow(() -> new InvalidEntityIdException("Invalid event UUID"))
+        );
+        participant = participantRepository.save(participant);
+        return new EventParticipantResponse(participant.getName(), participant.getCode());
     }
 
     public EventParticipantResponse addEventParticipant(UUID eventUuid, PrivateEntityParticipantDto request) {
-        Participant participant = new PrivateEntityParticipant(
+        if (!personalCodeValidator.isValid(request.personalCode())) {
+            throw new IllegalPersonalCodeException();
+        }
+        PrivateEntityParticipant participant = new PrivateEntityParticipant(
                 request.personalCode(),
                 request.firstName(),
                 request.lastName()
         );
-        return addEventParticipant(eventUuid, request, participant);
-    }
-
-    private EventParticipantResponse addEventParticipant(UUID eventUuid, ParticipantDto request, Participant participant) {
         participant.setPaymentType(
                 paymentTypeRepository.findById(request.paymentTypeId())
                         .orElseThrow(() -> new InvalidEntityIdException("Invalid payment type ID"))
