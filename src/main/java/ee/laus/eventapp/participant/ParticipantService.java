@@ -5,7 +5,6 @@ import ee.laus.eventapp.common.exception.IllegalPersonalCodeException;
 import ee.laus.eventapp.event.EventRepository;
 import ee.laus.eventapp.common.exception.InvalidEntityIdException;
 import ee.laus.eventapp.participant.dto.LegalEntityParticipantDto;
-import ee.laus.eventapp.participant.dto.ParticipantDto;
 import ee.laus.eventapp.participant.dto.PrivateEntityParticipantDto;
 import ee.laus.eventapp.participant.entity.LegalEntityParticipant;
 import ee.laus.eventapp.participant.entity.PrivateEntityParticipant;
