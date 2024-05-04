@@ -1,0 +1,25 @@
+.home-page-header-container {
+  background-color: rgb(36, 88, 156);
+  color: white;
+  padding: 0;
+}
+
+.home-page-text-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 100%;
+  padding: 0 20px;
+  font-size: 1.6rem;
+}
+
+.home-page-image {
+  width: 100%;
+  object-fit: fill;
+}
+
+.home-page-events-container {
+  width: 100%;
+  padding: 0;
+  margin-top: 10px;
+}

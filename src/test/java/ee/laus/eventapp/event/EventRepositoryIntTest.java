@@ -4,17 +4,13 @@ import ee.laus.eventapp.EventApplication;
 import ee.laus.eventapp.LocalPostgreSQLContainer;
 import ee.laus.eventapp.event.response.EventListItem;
 import ee.laus.eventapp.event.search.EventSearchParams;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.testcontainers.containers.PostgreSQLContainer;
 
 import java.time.LocalDate;
