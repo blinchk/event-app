@@ -1,5 +1,6 @@
 package ee.laus.eventapp.participant;
 
+import ee.laus.eventapp.common.exception.IllegalPersonalCodeException;
 import ee.laus.eventapp.event.Event;
 import ee.laus.eventapp.event.EventRepository;
 import ee.laus.eventapp.participant.dto.LegalEntityParticipantDto;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -25,6 +27,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("test")
 class ParticipantServiceTest {
     private ParticipantService participantService;
     @Mock
@@ -122,5 +125,21 @@ class ParticipantServiceTest {
         verify(participantRepository).save(any(PrivateEntityParticipant.class));
         assertEquals(name, actual.name());
         assertEquals(code, actual.code());
+    }
+
+    @Test
+    void addPrivateEntityParticipant_throwsIllegalPersonalCodeException() {
+        UUID eventUuid = UUID.randomUUID();
+        String illegalPersonalCode = "50303030111";
+        PrivateEntityParticipantDto dto = new PrivateEntityParticipantDto(
+               illegalPersonalCode,
+               "First Name",
+               "Last Name",
+               "",
+               1
+        );
+        assertThrows(IllegalPersonalCodeException.class, () -> {
+            participantService.addEventParticipant(eventUuid, dto);
+        });
     }
 }
