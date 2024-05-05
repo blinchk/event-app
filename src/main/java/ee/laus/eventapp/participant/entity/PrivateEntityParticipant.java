@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.Length;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorValue(value = "PRIVATE_ENTITY")
+@DiscriminatorValue(value = "private")
 public class PrivateEntityParticipant extends Participant {
     @Column(length = 11)
     @Length(min = 11, max = 11)
@@ -30,5 +30,10 @@ public class PrivateEntityParticipant extends Participant {
     @Override
     public String getName() {
         return String.format("%s %s", getFirstName(), getLastName());
+    }
+
+    @Override
+    public String getEntityType() {
+        return "private";
     }
 }

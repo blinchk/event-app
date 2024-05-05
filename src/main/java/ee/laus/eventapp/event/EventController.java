@@ -7,7 +7,7 @@ import ee.laus.eventapp.event.search.EventSearchParams;
 import ee.laus.eventapp.participant.ParticipantService;
 import ee.laus.eventapp.participant.dto.LegalEntityParticipantDto;
 import ee.laus.eventapp.participant.dto.PrivateEntityParticipantDto;
-import ee.laus.eventapp.participant.response.EventParticipantResponse;
+import ee.laus.eventapp.participant.response.EventParticipantListItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -42,12 +42,12 @@ public class EventController {
     }
 
     @PostMapping("/{uuid}/participant/legal-entity")
-    public EventParticipantResponse addParticipant(@PathVariable(value = "uuid") UUID eventUuid, @RequestBody LegalEntityParticipantDto eventParticipant) {
+    public EventParticipantListItem addParticipant(@PathVariable(value = "uuid") UUID eventUuid, @RequestBody LegalEntityParticipantDto eventParticipant) {
         return participantService.addEventParticipant(eventUuid, eventParticipant);
     }
 
     @PostMapping("/{uuid}/participant/private-entity")
-    public EventParticipantResponse addParticipant(@PathVariable(value = "uuid") UUID eventUuid, @RequestBody PrivateEntityParticipantDto eventParticipant) {
+    public EventParticipantListItem addParticipant(@PathVariable(value = "uuid") UUID eventUuid, @RequestBody PrivateEntityParticipantDto eventParticipant) {
         return participantService.addEventParticipant(eventUuid, eventParticipant);
     }
 }

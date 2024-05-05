@@ -4,15 +4,16 @@ import {EventRequest, useEvents} from "../../../hooks/useEvents.ts";
 import {useNavigate} from "react-router-dom";
 import {SubmitHandler, useForm} from "react-hook-form";
 
-const AddEventForm = () => {
-    const {addEvent} = useEvents();
+const EventForm = () => {
+    const { addEvent } = useEvents();
     const {handleSubmit, register} = useForm<EventRequest>();
     const navigate = useNavigate();
 
     const onSubmit: SubmitHandler<EventRequest> = (data) => {
         addEvent({
             ...data
-        }).then(() => navigate(`/`));
+        }).then(() => navigate(`/`))
+
     }
 
     return (
@@ -61,4 +62,4 @@ const AddEventForm = () => {
     )
 }
 
-export default AddEventForm;
+export default EventForm;

@@ -1,5 +1,7 @@
 package ee.laus.eventapp.participant;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import ee.laus.eventapp.common.exception.IllegalPersonalCodeException;
 import ee.laus.eventapp.event.Event;
 import ee.laus.eventapp.event.EventRepository;
@@ -7,7 +9,7 @@ import ee.laus.eventapp.participant.dto.LegalEntityParticipantDto;
 import ee.laus.eventapp.participant.dto.PrivateEntityParticipantDto;
 import ee.laus.eventapp.participant.entity.LegalEntityParticipant;
 import ee.laus.eventapp.participant.entity.PrivateEntityParticipant;
-import ee.laus.eventapp.participant.response.EventParticipantResponse;
+import ee.laus.eventapp.participant.response.EventParticipantListItem;
 import ee.laus.eventapp.payment.PaymentType;
 import ee.laus.eventapp.payment.PaymentTypeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,14 +37,23 @@ class ParticipantServiceTest {
     @Mock
     private PaymentTypeRepository paymentTypeRepository;
     @Mock
+    private LegalEntityParticipantRepository legalEntityParticipantRepository;
+    @Mock
+    private PrivateEntityParticipantRepository privateEntityParticipantRepository;
+    @Mock
     private EventRepository eventRepository;
 
     @BeforeEach
     void setUp() {
+        ObjectMapper mapper = new ObjectMapper()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         participantService = new ParticipantService(
                 participantRepository,
+                legalEntityParticipantRepository,
+                privateEntityParticipantRepository,
                 paymentTypeRepository,
-                eventRepository
+                eventRepository,
+                mapper
         );
     }
 
@@ -83,7 +94,7 @@ class ParticipantServiceTest {
         when(paymentTypeRepository.findById(1L)).thenReturn(Optional.of(paymentType));
         when(eventRepository.findById(eventUuid)).thenReturn(Optional.of(event));
         when(participantRepository.save(any(LegalEntityParticipant.class))).thenReturn(participant);
-        EventParticipantResponse actual = participantService.addEventParticipant(eventUuid, dto);
+        EventParticipantListItem actual = participantService.addEventParticipant(eventUuid, dto);
         verify(eventRepository).findById(eventUuid);
         verify(paymentTypeRepository).findById(dto.paymentTypeId());
         verify(participantRepository).save(any(LegalEntityParticipant.class));
@@ -120,7 +131,7 @@ class ParticipantServiceTest {
         when(paymentTypeRepository.findById(1L)).thenReturn(Optional.of(paymentType));
         when(eventRepository.findById(eventUuid)).thenReturn(Optional.of(event));
         when(participantRepository.save(any(PrivateEntityParticipant.class))).thenReturn(participant);
-        EventParticipantResponse actual = participantService.addEventParticipant(eventUuid, dto);
+        EventParticipantListItem actual = participantService.addEventParticipant(eventUuid, dto);
         verify(eventRepository).findById(eventUuid);
         verify(paymentTypeRepository).findById(dto.paymentTypeId());
         verify(participantRepository).save(any(PrivateEntityParticipant.class));
@@ -156,5 +167,18 @@ class ParticipantServiceTest {
         UUID uuid = UUID.randomUUID();
         participantService.deleteAllParticipantsByEventUuid(uuid);
         verify(participantRepository).deleteAllByEventUuid(uuid);
+    }
+
+    @Test
+    void getParticipant() {
+        UUID uuid = UUID.randomUUID();
+        PaymentType paymentType = new PaymentType(1L, "CASH", "Sularaha");
+        Event event = new Event(UUID.randomUUID(), "x", null, "", "");
+        LegalEntityParticipant participant = new LegalEntityParticipant("16481444", "Name", 3);
+        participant.setEvent(event);
+        participant.setPaymentType(paymentType);
+        when((participantRepository.findById(uuid))).thenReturn(Optional.of(participant));
+        participantService.getParticipant(uuid);
+        verify(participantRepository).findById(uuid);
     }
 }

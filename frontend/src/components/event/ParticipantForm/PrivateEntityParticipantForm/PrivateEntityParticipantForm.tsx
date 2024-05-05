@@ -1,7 +1,7 @@
-import {ParticipantFormProps} from "../AddParticipantForm.tsx";
 import {Col, Form, Row} from "react-bootstrap";
+import {RegisterParticipantFormOptions} from "../ParticipantForm.tsx";
 
-const PrivateEntityParticipantForm = (props: ParticipantFormProps) => {
+const PrivateEntityParticipantForm = (props: RegisterParticipantFormOptions) => {
     const { register } = props;
 
     return (

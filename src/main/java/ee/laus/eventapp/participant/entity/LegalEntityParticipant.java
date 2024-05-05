@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor()
-@DiscriminatorValue(value = "LEGAL_ENTITY")
+@DiscriminatorValue(value = "legal")
 public class LegalEntityParticipant extends Participant {
     private String registryCode;
     private String name;
@@ -21,5 +21,10 @@ public class LegalEntityParticipant extends Participant {
     @Override
     public String getCode() {
         return getRegistryCode();
+    }
+
+    @Override
+    public String getEntityType() {
+        return "legal";
     }
 }

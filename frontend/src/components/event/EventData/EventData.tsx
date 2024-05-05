@@ -18,6 +18,10 @@ const EventData = ({ event }: EventDataProps) => {
         deleteParticipant(participantUuid).then(() => navigate('.', { replace: true }))
     }
 
+    const handleSelectClick = (participantUuid: string) => {
+        navigate(`/participant/${participantUuid}`);
+    }
+
     return (
         <dl className="event-data">
             <Row>
@@ -56,7 +60,14 @@ const EventData = ({ event }: EventDataProps) => {
                                 <Col xs={1}>{index + 1}.</Col>
                                 <Col xs={3}>{participant.name}</Col>
                                 <Col xs={3}>{participant.code}</Col>
-                                <Col xs={2}><Button variant="light" className="no-outline-btn">Vaata</Button></Col>
+                                <Col xs={2}>
+                                    <Button
+                                        variant="light"
+                                        className="no-outline-btn"
+                                        onClick={() => handleSelectClick(participant.uuid)}>
+                                        Vaata
+                                    </Button>
+                                </Col>
                                 <Col xs={3}>
                                     <Button
                                         variant="light"

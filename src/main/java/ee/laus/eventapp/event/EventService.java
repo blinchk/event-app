@@ -7,7 +7,7 @@ import ee.laus.eventapp.event.response.EventResponse;
 import ee.laus.eventapp.event.search.EventSearchParams;
 import ee.laus.eventapp.common.exception.EntityNotFoundException;
 import ee.laus.eventapp.participant.ParticipantService;
-import ee.laus.eventapp.participant.response.EventParticipantResponse;
+import ee.laus.eventapp.participant.response.EventParticipantListItem;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +23,7 @@ public class EventService {
 
     public EventResponse getEvent(UUID uuid) {
         Event event = eventRepository.findById(uuid).orElseThrow(EntityNotFoundException::new);
-        List<EventParticipantResponse> participants = participantService.getEventParticipants(uuid);
+        List<EventParticipantListItem> participants = participantService.getEventParticipants(uuid);
         return new EventResponse(
                 event.getUuid(),
                 event.getName(),

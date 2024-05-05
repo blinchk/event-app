@@ -54,7 +54,7 @@ export const useEvents = () => {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify(event)
-        })
+        });
 
         return await response.json();
     }

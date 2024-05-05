@@ -2,11 +2,11 @@ package ee.laus.eventapp.participant.response;
 
 import java.util.UUID;
 
-public record EventParticipantResponseImpl(
+public record EventParticipantListItemImpl(
         UUID uuid,
         String name,
         String code
-) implements EventParticipantResponse {
+) implements EventParticipantListItem {
     @Override
     public UUID getUuid() {
         return uuid;

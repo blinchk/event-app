@@ -6,6 +6,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import AddEventPage from "./routes/EventPage/AddEventPage/AddEventPage.tsx";
 import EventPage, {loader as eventLoader} from "./routes/EventPage/EventPage.tsx";
 import HomePage from "./routes/HomePage/HomePage.tsx";
+import EditParticipantPage, {loader as participantLoader} from "./routes/EditParticipantPage/EditParticipantPage.tsx";
 
 const router = createBrowserRouter([
     {
@@ -28,6 +29,12 @@ const router = createBrowserRouter([
                 id: 'event-page',
                 loader: eventLoader,
             },
+            {
+                path: '/participant/:id',
+                element: <EditParticipantPage/>,
+                id: 'edit-participant-page',
+                loader: participantLoader
+            }
         ]
     }
 ]);

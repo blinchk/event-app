@@ -4,7 +4,7 @@ import './EventPage.scss';
 import {ContainerHeader} from "../../components/container/ContainerHeader.tsx";
 import {useLoaderData} from "react-router-dom";
 import {EventResponse, useEvents} from "../../hooks/useEvents.ts";
-import AddParticipantForm from "../../components/event/AddParticipantForm/AddParticipantForm.tsx";
+import ParticipantForm from "../../components/event/ParticipantForm/ParticipantForm.tsx";
 import EventData from "../../components/event/EventData/EventData.tsx";
 import {PaymentTypeResponse, usePaymentTypes} from "../../hooks/usePaymentTypes.ts";
 
@@ -31,7 +31,7 @@ const EventPage = () => {
                     </div>
                     <h3 className="text-primary">Osavõtjate lisamine</h3>
                     <div className="participant-create-form-wrapper">
-                        <AddParticipantForm paymentTypes={paymentTypes} />
+                        <ParticipantForm paymentTypes={paymentTypes} displayEntityTypeOptions actionType='create' />
                     </div>
                 </Col>
             </Row>

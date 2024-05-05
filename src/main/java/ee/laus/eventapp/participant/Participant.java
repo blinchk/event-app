@@ -11,9 +11,9 @@ import java.util.UUID;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
 @AllArgsConstructor
-@DiscriminatorColumn(name = "entityType")
+@NoArgsConstructor
+@DiscriminatorColumn(name = "entity_type")
 public abstract class Participant {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
@@ -27,4 +27,5 @@ public abstract class Participant {
 
     public abstract String getCode();
     public abstract String getName();
+    public abstract String getEntityType();
 }
