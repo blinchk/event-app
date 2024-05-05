@@ -150,9 +150,7 @@ class ParticipantServiceTest {
                "",
                1L
         );
-        assertThrows(IllegalPersonalCodeException.class, () -> {
-            participantService.addEventParticipant(eventUuid, dto);
-        });
+        assertThrows(IllegalPersonalCodeException.class, () -> participantService.addEventParticipant(eventUuid, dto));
     }
 
     @Test

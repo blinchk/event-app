@@ -1,10 +1,9 @@
 package ee.laus.eventapp.participant.entity;
 
 import ee.laus.eventapp.participant.Participant;
-import ee.laus.eventapp.payment.PaymentType;
-import jakarta.persistence.*;
+import jakarta.persistence.DiscriminatorValue;
+import jakarta.persistence.Entity;
 import lombok.*;
-import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Getter

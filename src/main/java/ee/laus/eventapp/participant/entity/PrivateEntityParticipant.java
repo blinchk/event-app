@@ -4,7 +4,6 @@ import ee.laus.eventapp.participant.Participant;
 import jakarta.persistence.Column;
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import jakarta.persistence.OneToOne;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
