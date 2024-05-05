@@ -2,6 +2,7 @@ version: "3"
 services:
   postgres:
     image: postgres
+    container_name: postgres
     restart: always
     ports:
       - "5435:5432"
@@ -9,3 +10,33 @@ services:
       POSTGRES_DB: events_app
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
+    networks:
+      - app-network
+  frontend:
+    build:
+      context: frontend
+    container_name: frontend
+    ports:
+      - "5173:5173"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+    environment:
+      VITE_BASE_URL: http://localhost:8080
+  backend:
+      build:
+        context: .
+      container_name: backend
+      ports:
+        - "8080:8080"
+      networks:
+        - app-network
+      depends_on:
+        - postgres
+      environment:
+        POSTGRES_HOSTNAME: postgres
+        POSTGRES_PORT: 5432
+networks:
+  app-network:
+    driver: bridge
