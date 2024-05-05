@@ -14,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 
@@ -48,8 +47,8 @@ class EventControllerTest {
     @Test
     void removeEvent() {
         UUID uuid = UUID.randomUUID();
-        eventController.removeEvent(uuid);
-        verify(eventService).removeEvent(uuid);
+        eventController.deleteEvent(uuid);
+        verify(eventService).deleteEvent(uuid);
     }
 
     @Test
@@ -71,7 +70,8 @@ class EventControllerTest {
                 "16481444",
                 3,
                 "zzz",
-                1
+                1L,
+                null
         );
         eventController.addParticipant(eventUuid, eventParticipant);
         verify(participantService).addEventParticipant(eventUuid, eventParticipant);
@@ -84,8 +84,8 @@ class EventControllerTest {
                 "60503040881",
                 "Nikolas",
                 "Laus",
-                "111",
-                1
+                null,
+                1L
 
         );
         eventController.addParticipant(eventUuid, eventParticipant);

@@ -5,6 +5,6 @@ public record PrivateEntityParticipantDto(
         String firstName,
         String lastName,
         String details,
-        Integer paymentTypeId
+        Long paymentTypeId
 ) implements ParticipantDto {
 }

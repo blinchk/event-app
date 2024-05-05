@@ -1,32 +1,64 @@
-import {Button, Form} from "react-bootstrap";
+import {Button, Col, Form, Row} from "react-bootstrap";
+import {getCurrentDateTime} from "../../../util/eventUtil.ts";
+import {EventRequest, useEvents} from "../../../hooks/useEvents.ts";
+import {useNavigate} from "react-router-dom";
+import {SubmitHandler, useForm} from "react-hook-form";
 
-const AddEventForm = () => (
-    <Form>
-        <Form.Group>
-            <Form.Label>Ürituse nimi</Form.Label>
-            <Form.Control></Form.Control>
-        </Form.Group>
-        <Form.Group>
-            <Form.Label>Toimumisaeg</Form.Label>
-            <Form.Control></Form.Control>
-        </Form.Group>
-        <Form.Group>
-            <Form.Label>Toimumise koht</Form.Label>
-            <Form.Control></Form.Control>
-        </Form.Group>
-        <Form.Group>
-            <Form.Label>Lisainfo</Form.Label>
-            <Form.Control as="textarea"></Form.Control>
-        </Form.Group>
+const AddEventForm = () => {
+    const {addEvent} = useEvents();
+    const {handleSubmit, register} = useForm<EventRequest>();
+    const navigate = useNavigate();
 
-        <Button variant="secondary">
-            Tagasi
-        </Button>
+    const onSubmit: SubmitHandler<EventRequest> = (data) => {
+        addEvent({
+            ...data
+        }).then(() => navigate(`/`));
+    }
 
-        <Button variant="primary" type="submit">
-            Salvesta
-        </Button>
-    </Form>
-)
+    return (
+        <Form onSubmit={handleSubmit(onSubmit)}>
+            <Form.Group as={Row} className="mb-3">
+                <Form.Label column>Ürituse nimi</Form.Label>
+                <Col>
+                    <Form.Control {...register('name', {required: true})} />
+                </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3">
+                <Form.Label column>Toimumisaeg</Form.Label>
+                <Col>
+                    <Form.Control
+                        required
+                        type="datetime-local"
+                        min={getCurrentDateTime()}
+                        placeholder='pp.kk.aaaa hh:mm'
+                        {...register('time', {required: true})}
+                    />
+                </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3">
+                <Form.Label column>Toimumise koht</Form.Label>
+                <Col>
+                    <Form.Control {...register('location', { required: true })} />
+                </Col>
+            </Form.Group>
+            <Form.Group as={Row} className="mb-3">
+                <Form.Label column>Lisainfo</Form.Label>
+                <Col>
+                    <Form.Control as="textarea"
+                                  {...register('description', { maxLength: 1000 })}
+                    />
+                </Col>
+            </Form.Group>
+
+            <Button variant="secondary">
+                Tagasi
+            </Button>
+
+            <Button variant="primary" type="submit">
+                Salvesta
+            </Button>
+        </Form>
+    )
+}
 
 export default AddEventForm;

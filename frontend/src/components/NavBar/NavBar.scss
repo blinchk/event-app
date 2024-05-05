@@ -1,7 +1,31 @@
-.nav-links {
+@import 'bootstrap/scss/bootstrap';
 
+.nav-link {
+  font-variant: all-small-caps;
 
-  &__link-text {
-    font-variant: all-small-caps;
+  &:hover {
+    cursor: pointer;
   }
+}
+
+.nav-links .navbar-nav {
+  align-self: center !important;
+}
+
+.navbar-nav .nav-link {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px;
+}
+
+.navbar-nav .nav-link.active {
+  background: rgb(36, 88, 156) !important;
+  color: white !important;
+}
+
+.navbar {
+  --bs-navbar-padding-y: 0 !important;
+  --bs-navbar-toggler-padding-y: 0 !important;
+  background-color: white;
 }

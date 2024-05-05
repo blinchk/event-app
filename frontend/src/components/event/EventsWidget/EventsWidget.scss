@@ -5,6 +5,7 @@
     background-color: rgb(36, 88, 156);
     color: white;
     text-align: center;
+    font-size: 1.15rem;
     padding: 15px 0;
     display: grid;
   }
@@ -13,19 +14,8 @@
     width: 100%;
     align-items: center;
   }
-}
 
-.no-outline-btn {
-  border: 0;
-
-  &-text {
-    font-variant: all-small-caps;
-    color: #515151;
-    font-weight: bold;
-  }
-
-  &:hover {
-    border: 0;
-    background-color: white;
+  &-content {
+    padding: 5px 20px;
   }
 }

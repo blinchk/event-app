@@ -11,9 +11,9 @@ import java.util.UUID;
 
 @Repository
 public interface ParticipantRepository extends JpaRepository<Participant, UUID> {
-    @Query(value =
-    """
+    @Query(value = """
     select
+        p.uuid as uuid,
         case
             when entity_type = 'LEGAL_ENTITY' then p.name
             when entity_type = 'PRIVATE_ENTITY' then concat(p.first_name, ' ', p.last_name)
@@ -28,4 +28,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, UUID> 
     order by code desc
     """, nativeQuery = true)
     List<EventParticipantResponse> getEventParticipantsByEventUuid(@Param(value = "event_uuid") UUID eventUuid);
+
+    void deleteAllByEventUuid(UUID eventUuid);
 }

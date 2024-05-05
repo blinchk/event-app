@@ -1,5 +1,31 @@
+$theme-colors: (
+  'primary': rgb(36, 88, 156)
+);
+
 @import 'bootstrap/scss/bootstrap';
 
 .btn-light {
   background-color: white;
+}
+
+.no-outline-btn {
+  border: 0;
+  font-variant: all-small-caps;
+  color: #515151;
+  font-weight: 600;
+
+  &:hover {
+    border: 0;
+    background-color: white;
+  }
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, #app {
+  background-color: rgb(238, 241, 244);
 }

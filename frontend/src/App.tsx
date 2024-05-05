@@ -1,18 +1,13 @@
 import NavBar from "./components/NavBar/NavBar.tsx";
 
 import './App.scss';
-import {Route, Routes} from "react-router-dom";
-import HomePage from "./routes/HomePage/HomePage.tsx";
-import AddEventPage from "./routes/AddEventPage/AddEventPage.tsx";
+import {Outlet} from "react-router-dom";
 
 function App() {
   return (
-    <div>
+    <div id="app">
       <NavBar />
-      <Routes>
-         <Route path='/' element={<HomePage/>} />
-         <Route path='/event/add' element={<AddEventPage/>} />
-      </Routes>
+      <Outlet />
     </div>
   )
 }

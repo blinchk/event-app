@@ -44,7 +44,8 @@ public class EventService {
         return mapper.convertValue(event, EventResponse.class);
     }
 
-    public void removeEvent(UUID uuid) {
+    public void deleteEvent(UUID uuid) {
+        participantService.deleteAllParticipantsByEventUuid(uuid);
         eventRepository.deleteById(uuid);
     }
 }

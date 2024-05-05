@@ -80,7 +80,7 @@ class EventServiceTest {
     @Test
     void removeEvent() {
         UUID uuid = UUID.randomUUID();
-        eventService.removeEvent(uuid);
+        eventService.deleteEvent(uuid);
         verify(eventRepository).deleteById(uuid);
     }
 }

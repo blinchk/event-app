@@ -64,7 +64,8 @@ class ParticipantServiceTest {
                 code,
                 personCount,
                 name,
-                1
+                1L,
+                null
         );
         LegalEntityParticipant participant = new LegalEntityParticipant(
                 dto.registryCode(),
@@ -78,16 +79,16 @@ class ParticipantServiceTest {
                 "Tallinn, Estonia",
                 "Lorem ipsum"
         );
-        PaymentType paymentType = new PaymentType(1, "CASH", "Sularaha");
-        when(paymentTypeRepository.findById(1)).thenReturn(Optional.of(paymentType));
+        PaymentType paymentType = new PaymentType(1L, "CASH", "Sularaha");
+        when(paymentTypeRepository.findById(1L)).thenReturn(Optional.of(paymentType));
         when(eventRepository.findById(eventUuid)).thenReturn(Optional.of(event));
         when(participantRepository.save(any(LegalEntityParticipant.class))).thenReturn(participant);
         EventParticipantResponse actual = participantService.addEventParticipant(eventUuid, dto);
         verify(eventRepository).findById(eventUuid);
         verify(paymentTypeRepository).findById(dto.paymentTypeId());
         verify(participantRepository).save(any(LegalEntityParticipant.class));
-        assertEquals(name, actual.name());
-        assertEquals(code, actual.code());
+        assertEquals(name, actual.getName());
+        assertEquals(code, actual.getCode());
     }
 
     @Test
@@ -101,7 +102,7 @@ class ParticipantServiceTest {
                 "Nikolas",
                 "Laus",
                 "",
-                1
+                1L
         );
         PrivateEntityParticipant participant = new PrivateEntityParticipant(
                 dto.personalCode(),
@@ -115,16 +116,16 @@ class ParticipantServiceTest {
                 "Tallinn, Estonia",
                 "Lorem ipsum"
         );
-        PaymentType paymentType = new PaymentType(1, "CASH", "Sularaha");
-        when(paymentTypeRepository.findById(1)).thenReturn(Optional.of(paymentType));
+        PaymentType paymentType = new PaymentType(1L, "CASH", "Sularaha");
+        when(paymentTypeRepository.findById(1L)).thenReturn(Optional.of(paymentType));
         when(eventRepository.findById(eventUuid)).thenReturn(Optional.of(event));
         when(participantRepository.save(any(PrivateEntityParticipant.class))).thenReturn(participant);
         EventParticipantResponse actual = participantService.addEventParticipant(eventUuid, dto);
         verify(eventRepository).findById(eventUuid);
         verify(paymentTypeRepository).findById(dto.paymentTypeId());
         verify(participantRepository).save(any(PrivateEntityParticipant.class));
-        assertEquals(name, actual.name());
-        assertEquals(code, actual.code());
+        assertEquals(name, actual.getName());
+        assertEquals(code, actual.getCode());
     }
 
     @Test
@@ -136,10 +137,24 @@ class ParticipantServiceTest {
                "First Name",
                "Last Name",
                "",
-               1
+               1L
         );
         assertThrows(IllegalPersonalCodeException.class, () -> {
             participantService.addEventParticipant(eventUuid, dto);
         });
+    }
+
+    @Test
+    void deleteParticipant() {
+        UUID uuid = UUID.randomUUID();
+        participantService.deleteParticipant(uuid);
+        verify(participantRepository).deleteById(uuid);
+    }
+
+    @Test
+    void deleteAllParticipantsByEventUuid() {
+        UUID uuid = UUID.randomUUID();
+        participantService.deleteAllParticipantsByEventUuid(uuid);
+        verify(participantRepository).deleteAllByEventUuid(uuid);
     }
 }

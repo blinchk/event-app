@@ -1,11 +1,12 @@
 import {Col, Container, Row} from "react-bootstrap";
 import homePageImage from '../../assets/pilt.jpg';
 
+import EventsWidget from "../../components/event/EventsWidget/EventsWidget.tsx";
+
 import './HomePage.scss';
-import EventsWidget from "../../components/event/HomePageEvents/EventsWidget.tsx";
 
 const HomePage = () => (
-    <Container>
+    <Container className="home-page-container">
         <Container className="home-page-header-container">
             <Row>
                 <Col>

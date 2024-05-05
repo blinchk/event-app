@@ -4,6 +4,7 @@ public record LegalEntityParticipantDto(
         String registryCode,
         Integer personCount,
         String name,
-        Integer paymentTypeId
+        Long paymentTypeId,
+        String details
 ) implements ParticipantDto {
 }

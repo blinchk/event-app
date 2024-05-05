@@ -1,0 +1,19 @@
+@import "src/styles/variables.scss";
+
+.container-header {
+  background: $primary-color;
+  width: 100%;
+  margin-bottom: 10px;
+
+  &-text {
+    padding: 1rem 2rem 10px 3rem;
+    color: white;
+    font-weight: lighter;
+  }
+
+  &-image {
+    height: 75px;
+    width: 100%;
+    object-fit: cover;
+  }
+}

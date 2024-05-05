@@ -32,8 +32,8 @@ public class EventController {
     }
 
     @DeleteMapping("/{uuid}")
-    public void removeEvent(@PathVariable UUID uuid) {
-        eventService.removeEvent(uuid);
+    public void deleteEvent(@PathVariable UUID uuid) {
+        eventService.deleteEvent(uuid);
     }
 
     @PostMapping

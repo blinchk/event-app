@@ -31,7 +31,7 @@ class PaymentTypeControllerTest {
     @Test
     void getPaymentTypes() {
         when(paymentTypeRepository.findAll()).thenReturn(
-                List.of(new PaymentType(1, "CASH", "Sularaha"))
+                List.of(new PaymentType(1L, "CASH", "Sularaha"))
         );
         paymentTypeController.getPaymentTypes();
         verify(paymentTypeRepository).findAll();
